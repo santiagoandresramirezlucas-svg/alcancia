@@ -29,6 +29,7 @@ public class Main {
         int hechar;
         int meta = 0;
         int total = 0;
+        int ahorrado;
 
         int den1=0;
         int den2=0;
@@ -45,63 +46,91 @@ public class Main {
         int sumaden6 = 0;
 
         //Meta
-        System.out.println("Establecer una meta de ahorro: ");
+        System.out.println("Establecer una meta de ahorro mayor o igual a 20: ");
         meta = lector.nextInt();
 
-    do {
+        while (hacer != 6){
         //Menu
         System.out.println("Esciba:\n1. Ahorrar\n2. Contar monedas de cada denominacion\n3. Monto por cada denominación" +
-                "\n4. Monto total\n5. Mostrar total\n6. Mostrar meta de ahorro\n7. salir");
+                "\n4. Monto total\n5. Mostrar meta de ahorro\n6. salir");
 
         //Acciones
         hacer = lector.nextInt();
-
         switch (hacer) {
             case 1:
                 System.out.println("Opciones para agregar monedas:\n1). 20\n2). 50\n3). 100\n4). 200\n5). 500\n6). 1000\n");
                 hechar = lector.nextInt();
                 if (hechar == 1) {
-                    den1 += 1;
-                    total += 20;
-                    sumaden1= den1*moneda1;
+                    if( (total+20) <= meta) {
+                        den1 += 1;
+                        total += 20;
+                        sumaden1 = den1 * moneda1;
+                        ahorrado = meta - total;
+                        System.out.println("Faltan: " + ahorrado + " para alcanzar la meta");
+                    }else{
+                        System.out.println("Hechar una moneda de menos valor");
+                    }
                 } else if (hechar == 2) {
-                    den2 += 1;
-                    total += 50;
-                    sumaden2= den2*moneda2;
+                    if( (total+50) <= meta) {
+                        den2 += 1;
+                        total += 50;
+                        sumaden2 = den2 * moneda2;
+                        ahorrado = meta - total;
+                        System.out.println("Faltan: " + ahorrado + " para alcanzar la meta");
+                    }
+                    else{
+                        System.out.println("Hechar una moneda de menos valor");
+                    }
                 } else if (hechar == 3) {
-                    den3 += 1;
-                    total += 100;
-                    sumaden3= den3*moneda3;
+                    if( (total+100) <= meta) {
+                        den3 += 1;
+                        total += 100;
+                        sumaden3 = den3 * moneda3;
+                        ahorrado = meta - total;
+                        System.out.println("Faltan: " + ahorrado + " para alcanzar la meta");
+                    }
+                    else{
+                        System.out.println("Hechar una moneda de menos valor");
+                    }
                 } else if (hechar == 4) {
-                    den4 += 1;
-                    total += 200;
-                    sumaden4= den4*moneda4;
-                } else if (hechar == 5) {
-                    den5 += 1;
-                    total += 500;
-                    sumaden5= den5*moneda5;
-                } else if (hechar == 6) {
-                    den6 += 1;
-                    total += 1000;
-                    sumaden6= den6*moneda6;
-                }
-                // Limite
-                if(total>meta){
-                    menor = false;
-                    while(menor == false) {
-                        System.out.println("hechar una moneda de menor denominacion");
-                        System.out.println("Opciones para agregar monedas:\n1). 20\n2). 50\n3). 100\n4). 200\n5). 500\n6). 1000\n");
-                        total = total - hechar;
-                        if(total<=0){total = 0;}
-                        hechar = lector.nextInt();
-                        System.out.println("Faltan: " + (meta - total) + " para alcanzar la meta");
-
-                        if(total == meta){menor = true;}
+                    if( (total+200) <= meta) {
+                        den4 += 1;
+                        total += 200;
+                        sumaden4 = den4 * moneda4;
+                        ahorrado = meta - total;
+                        System.out.println("Faltan: " + ahorrado + " para alcanzar la meta");
+                    }
+                    else{
+                        System.out.println("Hechar una moneda de menos valor");
                     }
                 }
+                else if (hechar == 5) {
 
-                System.out.println("Faltan: " + (meta - total) + " para alcanzar la meta");
-
+                    if( (total+500) <= meta) {
+                        den5 += 1;
+                        total += 500;
+                        sumaden5 = den5 * moneda5;
+                        ahorrado = meta - total;
+                        System.out.println("Faltan: " + ahorrado + " para alcanzar la meta");
+                    }
+                    else{
+                        System.out.println("Hechar una moneda de menos valor");
+                    }
+                } else if (hechar == 6) {
+                    if( (total+1000) <= meta) {
+                        den6 += 1;
+                        total += 1000;
+                        sumaden6= den6*moneda6;
+                        ahorrado = meta - total;
+                        System.out.println("Faltan: " + ahorrado + " para alcanzar la meta");
+                    }else{
+                        System.out.println("Hechar una moneda de menos valor");
+                    }
+                }
+                else
+                {
+                    System.out.println("Opcion no existente");
+                }
                 break;
             case 2:
                 System.out.println("Opciones para mostrar la cantidad de monedas:\n1). 20\n2). 50\n3). 100\n4). 200\n5). 500\n6). 1000\n");
@@ -141,11 +170,20 @@ public class Main {
                 System.out.println("Tiene un total de: " + total + " en su alcancia");
                 break;
             case 5:
-                    System.out.println("Tiene un total de: " + total + " en su alcancia");
-            case 6:
                 System.out.println("Su meta es: " +  meta);
+                break;
         }
-    }while (hacer != 7) ;
+        if (meta==total){
+            System.out.println("Meta alcanzada");
+            while(hacer != 2){
+                System.out.println("Escribir:\n1. Mostrar total\n2. Salir");
+                hacer= lector.nextInt();
+                if(hacer==1){System.out.println("Total: " + total);}
+            }
+            break;
+        }
+    }
+
 
     }
 }
